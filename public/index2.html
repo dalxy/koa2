@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Generate Image</title>
+  </head>
+  <body>
+    <h1>Generate Image</h1>
+    <form id="form">
+      <label for="model">Model:</label>
+      <input type="text" id="model" name="model" value="text-davinci-002" />
+      <br />
+      <label for="prompt">Prompt:</label>
+      <input type="text" id="prompt" name="prompt" value="The quick brown fox jumps over the lazy dog." />
+      <br />
+      <button type="submit">Generate</button>
+    </form>
+    <div id="image"></div>
+    <script>
+      // 监听表单提交事件
+      document.querySelector("#form").addEventListener("submit", async (event) => {
+        // 阻止表单提交的默认行为
+        event.preventDefault();
+
+        // 获取表单中的参数
+        const model = document.querySelector("#model").value;
+        const prompt = document.querySelector("#prompt").value;
+
+        // 发送 AJAX 请求，生成图片
+        const response = await fetch("http://localhost:3000/testOpenai", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ model, prompt }),
+        });
+        // const data = await response.json();
+
+        // 在页面上展示生成的图片
+        // const image = document.querySelector("#image");
+        // image.innerHTML = `<img src="data:image/jpeg;base64,${data}" />`;
+      });
+    </script>
+  </body>
+</html>
